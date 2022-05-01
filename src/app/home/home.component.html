@@ -1,0 +1,35 @@
+<div class="container-fluid">
+    <form #templateForm="ngForm" (ngSubmit)="onSubmit(templateForm)">
+        <div class="form-group">
+          <label for="movieName">Enter Movie Name</label>
+          <input type="text" class="form-control" id="movieName" name="movieName" ngModel placeholder="Enter movie">
+        </div>
+        <button type="submit" class="btn btn-primary" style="margin-top: 10px;">Submit</button>
+      </form>
+      <hr/>
+      <div *ngIf="results.length>0" class="row">
+        <div class="col-md-4"
+            *ngFor="let res of results | paginate: {itemsPerPage:20, currentPage: currentPage, totalItems: totalCount}">
+            <div class="card" style="width: 28rem; margin-bottom: 10px;">
+                <img class="card-img-top" src="{{res.large_cover_image}}" alt="Card image cap">
+                <div class="card-body">
+                  <h5 class="card-title">{{res.title_long}}</h5>
+                  <p class="card-text">{{res.description_full}}</p>
+                  <div *ngFor="let tor of res.torrents">
+                    <a href="{{tor.url}}" class="btn btn-link">{{tor.quality}}("seeds":{{tor.seeds}}, "size":{{tor.size}}, "type":{{tor.type}})</a>
+                  </div>
+                </div>
+              </div>
+        </div>
+    </div>
+</div>
+<div class="container-fluid" *ngIf="results.length>0">
+    <div class="row">
+        <div class="col-md-12">
+            <div style="text-align:justify;">
+                <pagination-controls (pageChange)="getPaginatedData($event)"></pagination-controls>
+            </div>
+        </div>
+    </div>
+</div>
+

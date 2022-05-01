@@ -119,6 +119,10 @@
           }
         }
       }
-    }},
-  "defaultProject": "yify-project"
+    }
+  },
+  "defaultProject": "yify-project",
+  "cli": {
+    "analytics": false
+  }
 }
