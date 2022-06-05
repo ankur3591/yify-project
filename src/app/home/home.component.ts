@@ -13,6 +13,7 @@ export class HomeComponent implements OnInit {
   totalCount;
   searchQuery;
   currentPage: number = 1;
+  payload = {}
   ngOnInit(): void {
   }
   onSubmit(templateForm){
@@ -21,15 +22,19 @@ export class HomeComponent implements OnInit {
     this.movieService.fetchMovies(templateForm.value['movieName']).subscribe(response=>{
       this.totalCount = response.data.movie_count;
       this.results = response.data.movies;
+      this.payload['currentPage'] = this.currentPage;
+      this.payload['totalCount'] = this.totalCount;
+      this.payload['results'] = this.results;
+      this.payload['searchQuery'] = this.searchQuery;
     })
   }
 
-  async getPaginatedData($event) {
-    this.currentPage = $event;
-    window.scroll(0, 0);
-    this.movieService.searchByPageIndex(this.searchQuery, $event).subscribe(response => {
+  showRelated(movieId){
+    this.currentPage = 1;
+    this.movieService.showRelatedMovies(movieId).subscribe(response=>{
+      this.totalCount = response.data.movie_count;
       this.results = response.data.movies;
-    })
+      console.log(this.results);
+    }) 
   }
-
 }

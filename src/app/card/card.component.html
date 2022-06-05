@@ -1,0 +1,36 @@
+<div class="col-md-12"
+*ngFor="let res of results | paginate: {itemsPerPage:20, currentPage: currentPage, totalItems: totalCount}">
+<div class="card" style="width: 100%; margin-bottom: 10px;">
+    <div class="row">
+      <div class="col-md-3">
+        <img class="card-img-top" src="{{res.medium_cover_image}}" alt="Card image cap">
+      </div>
+      <div class="col-md-9">
+        <div class="card-body">
+          <h5 class="card-title">{{res.title_long}}:{{res.rating}} </h5>
+          <p class="card-text">{{res.description_full}}</p>
+          <p class="card-text"><b>Rating:</b> {{res.rating}}</p>
+          <p class="card-text"><b>Genres: </b><span>
+          <div *ngFor="let gen of res.genres">
+            <p class="card-text">"{{gen}}"</p>
+          </div></span></p>
+          <div *ngFor="let tor of res.torrents">
+            <p>Quality: <small><b>{{tor.quality}}</b></small>, Type: <small><b>{{tor.type}}</b></small>, Seeds: <small><b>{{tor.seeds}}</b></small>, Peers: <small><b>{{tor.peers}}</b></small>, Size: <small><b>{{tor.size}}</b></small><span>
+              <a href="{{tor.url}}" class="btn btn-link">Get Torrent</a>
+            </span></p>
+          </div>
+          <button class="btn btn-link" (click)="showRelated(res.id)" >Show Related Movies</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="container-fluid" *ngIf="results.length>0">
+    <div class="row">
+        <div class="col-md-12">
+            <div style="text-align:justify;">
+                <pagination-controls (pageChange)="getPaginatedData($event)"></pagination-controls>
+            </div>
+        </div>
+    </div>
+</div>

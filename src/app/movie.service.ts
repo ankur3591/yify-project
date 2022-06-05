@@ -15,4 +15,10 @@ export class MovieService {
   searchByPageIndex(query, index): Observable<any> {
     return this.http.get(`https://yts.mx/api/v2/list_movies.json?query_term=${query}&limit=20&page=${index}`);
   }
+  showRelatedMovies(movieId): Observable<any> {
+    return this.http.get(`https://yts.mx/api/v2/movie_suggestions.json?movie_id=${movieId}`);
+  }
+  upcomingMovies(): Observable<any> {
+    return this.http.get(`https://yts.mx/api/v2/list_upcoming.json`);
+  }
 }
